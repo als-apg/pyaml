@@ -1,5 +1,12 @@
 # pyaml
 
+> **This is the ALS-APG staging fork of [pyAML](https://github.com/python-accelerator-middle-layer/pyaml),**
+> published on PyPI as `accelerator-middle-layer-apg` (import name unchanged: `pyaml`).
+> It carries only upstream commits and exists so that OSPREY deployments can depend on
+> fixes that are not yet in an upstream release. Unless you deploy OSPREY, install
+> `accelerator-middle-layer` instead; do not install both, they ship the same `pyaml/` package.
+> Please file issues and pull requests upstream.
+
 **Package for the Python Accelerator Middle Layer core**
 
 [![Documentation Status](https://readthedocs.org/projects/pyaml/badge/?version=stable)](https://pyaml.readthedocs.io/en/stable/?badge=stable)
