@@ -1,6 +1,10 @@
 [project]
-name = "accelerator-middle-layer"
-description = "Python Accelerator Middle Layer"
+# ALS-APG staging distribution of pyAML (github.com/als-apg/pyaml): an upstream snapshot
+# published so downstream packages can depend on fixes that are not yet in an upstream
+# release. The import name is unchanged (`pyaml`), so do not install it beside
+# `accelerator-middle-layer` -- both ship the same `pyaml/` package.
+name = "accelerator-middle-layer-apg"
+description = "ALS-APG staging snapshot of pyAML (Python Accelerator Middle Layer) for OSPREY deployments; everyone else should install accelerator-middle-layer"
 readme = "README.md"
 requires-python = ">=3.11"
 dynamic = ["version"]

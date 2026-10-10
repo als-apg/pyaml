@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+.post[0-9]+'
   workflow_dispatch:
 
 jobs:
@@ -11,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    #environment: release
+    environment: pypi
     permissions:
       id-token: write
 
