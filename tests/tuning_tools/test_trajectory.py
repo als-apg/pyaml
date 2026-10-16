@@ -1,7 +1,9 @@
 """Tests for :mod:`pyaml.tuning_tools.trajectory`.
 
 Every test that needs the frozen goldens file carries ``golden`` in its name, so
-``pytest -k "not golden"`` runs the rest without it. The module clears pyAML's
+``pytest -k "not golden"`` runs the rest without it. When the in-repo goldens file is
+absent the golden tests skip; a file named through ``PYAML_TRAJECTORY_GOLDENS`` is
+required and a missing one errors. The module clears pyAML's
 element registry itself, because it must also run without the repository's
 ``conftest.py``.
 """
@@ -2243,8 +2245,16 @@ def test_case_table_states_the_divergence_cases_and_the_beam_cut():
 
 @pytest.fixture(scope="module")
 def goldens():
-    """The frozen npz; a missing file is a ``FileNotFoundError``, never a skip."""
-    path = os.environ.get("PYAML_TRAJECTORY_GOLDENS", str(Path(__file__).with_name("trajectory_goldens.npz")))
+    """The frozen npz.
+
+    The in-repo file is optional: a checkout that does not ship it skips every golden
+    test. A path named through ``PYAML_TRAJECTORY_GOLDENS`` is required, so a wrong
+    path is a ``FileNotFoundError`` and never a silent skip.
+    """
+    override = os.environ.get("PYAML_TRAJECTORY_GOLDENS")
+    path = Path(override) if override else Path(__file__).with_name("trajectory_goldens.npz")
+    if not override and not path.is_file():
+        pytest.skip(f"{path.name} is not in this checkout; set PYAML_TRAJECTORY_GOLDENS to run the golden tests")
     with np.load(path, allow_pickle=False) as npz:
         yield {key: npz[key] for key in npz.files}
 
